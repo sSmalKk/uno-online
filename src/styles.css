@@ -1,0 +1,160 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-gold: var(--gold);
+  --color-gold-foreground: var(--gold-foreground);
+  --color-purple-deep: var(--purple-deep);
+  --color-purple-mid: var(--purple-mid);
+  --color-purple-soft: var(--purple-soft);
+  --font-display: "Baloo 2", system-ui, sans-serif;
+}
+
+:root {
+  --radius: 1rem;
+
+  /* Purple game theme */
+  --background: oklch(0.32 0.13 305);
+  --foreground: oklch(0.98 0.01 300);
+
+  --purple-deep: oklch(0.22 0.10 305);
+  --purple-mid: oklch(0.42 0.16 305);
+  --purple-soft: oklch(0.78 0.08 305);
+
+  --card: oklch(0.97 0.02 320);
+  --card-foreground: oklch(0.35 0.15 305);
+
+  --popover: oklch(0.97 0.02 320);
+  --popover-foreground: oklch(0.35 0.15 305);
+
+  --primary: oklch(0.78 0.18 65);
+  --primary-foreground: oklch(0.25 0.10 50);
+
+  --secondary: oklch(0.55 0.18 305);
+  --secondary-foreground: oklch(0.98 0.01 300);
+
+  --muted: oklch(0.90 0.04 310);
+  --muted-foreground: oklch(0.50 0.10 305);
+
+  --accent: oklch(0.65 0.20 305);
+  --accent-foreground: oklch(0.98 0.01 300);
+
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.98 0.01 300);
+
+  --gold: oklch(0.80 0.17 70);
+  --gold-foreground: oklch(0.25 0.10 50);
+
+  --border: oklch(0.55 0.15 305 / 30%);
+  --input: oklch(0.55 0.15 305 / 30%);
+  --ring: oklch(0.78 0.18 65);
+
+  --gradient-gold: linear-gradient(180deg, oklch(0.88 0.16 80), oklch(0.70 0.20 55));
+  --gradient-gold-active: linear-gradient(180deg, oklch(0.70 0.20 55), oklch(0.55 0.18 40));
+  --gradient-purple-bg: linear-gradient(180deg, oklch(0.32 0.13 305), oklch(0.20 0.10 300));
+  --gradient-purple-card: linear-gradient(180deg, oklch(0.55 0.18 305), oklch(0.38 0.14 305));
+  --gradient-card-light: linear-gradient(180deg, oklch(0.98 0.015 320), oklch(0.93 0.04 320));
+
+  --shadow-gold: 0 6px 0 oklch(0.45 0.15 40), 0 10px 24px oklch(0.70 0.18 55 / 35%);
+  --shadow-gold-sm: 0 3px 0 oklch(0.45 0.15 40), 0 4px 10px oklch(0.70 0.18 55 / 35%);
+  --shadow-purple: 0 6px 0 oklch(0.28 0.10 300), 0 12px 24px oklch(0.15 0.08 300 / 50%);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+
+  html, body, #root {
+    height: 100%;
+  }
+
+  body {
+    background: transparent;
+    color: var(--color-foreground);
+    font-family: var(--font-display);
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
+    overflow: hidden !important;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-gold { background: var(--gradient-gold); }
+  .bg-gradient-gold-active:active { background: var(--gradient-gold-active); }
+  .bg-gradient-purple-card { background: var(--gradient-purple-card); }
+  .bg-gradient-card-light { background: var(--gradient-card-light); }
+  .shadow-gold { box-shadow: var(--shadow-gold); }
+  .shadow-gold-sm { box-shadow: var(--shadow-gold-sm); }
+  .shadow-purple { box-shadow: var(--shadow-purple); }
+
+  .text-stroke-purple {
+    -webkit-text-stroke: 2px oklch(0.30 0.12 305);
+    paint-order: stroke fill;
+  }
+
+  .app-shell {
+    width: 100%;
+    min-height: 100dvh;
+    max-width: 28rem;
+    margin-inline: auto;
+    position: relative;
+    background: transparent;
+    overflow: hidden;
+  }
+
+  /* Objeto master — moldura fixa do jogo (497x437) */
+  .game-frame {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-end;
+    align-content: flex-end;
+    width: 497px;
+    height: 437px;
+    background-repeat: no-repeat;
+    font-size: 24px;
+    overflow: visible;
+    position: relative;
+  }
+
+  body {
+    overflow: hidden !important;
+  }
+}
+
+@keyframes hand-in-from-right {
+  0% { transform: translateX(40px) scale(0.7); opacity: 0; }
+  100% { transform: translateX(0) scale(1); opacity: 1; }
+}
+@keyframes hand-in-from-left {
+  0% { transform: translateX(-40px) scale(0.7); opacity: 0; }
+  100% { transform: translateX(0) scale(1); opacity: 1; }
+}
