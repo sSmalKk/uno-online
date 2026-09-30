@@ -23,7 +23,7 @@ export function SalaEntry() {
       const res = await create({
         data: { hostId: getLocalPlayerId(), hostName: name || "Host", maxPlayers },
       });
-      try { localStorage.setItem("activeRoomCode", res.code); } catch {}
+      try { localStorage.setItem("activeRoomCode", res.code); } catch { /* storage bloqueado: segue sem lembrar a sala */ }
       go("waiting", { mode: "sala", roomCode: res.code });
     } catch (e) { setErr((e as Error).message); }
     finally { setLoading(false); }
@@ -35,7 +35,7 @@ export function SalaEntry() {
       setLocalPlayerName(name);
       const c = code.trim().toUpperCase();
       await join({ data: { code: c, playerId: getLocalPlayerId(), name: name || "Jogador" } });
-      try { localStorage.setItem("activeRoomCode", c); } catch {}
+      try { localStorage.setItem("activeRoomCode", c); } catch { /* storage bloqueado: segue sem lembrar a sala */ }
       go("waiting", { mode: "sala", roomCode: c });
     } catch (e) { setErr((e as Error).message); }
     finally { setLoading(false); }

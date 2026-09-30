@@ -20,7 +20,7 @@ export function Lobby() {
       const res = await create({
         data: { hostId: getLocalPlayerId(), hostName: name, maxPlayers: 4 },
       });
-      try { localStorage.setItem("activeRoomCode", res.code); } catch {}
+      try { localStorage.setItem("activeRoomCode", res.code); } catch { /* storage bloqueado: segue sem lembrar a sala */ }
       go("waiting", { mode: "sala", roomCode: res.code });
     } catch (e) {
       setErr((e as Error).message);

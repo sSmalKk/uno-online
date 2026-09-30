@@ -88,14 +88,14 @@ export function MesaOnline() {
 
   useEffect(() => {
     if (!roomCode) return;
-    try { localStorage.setItem("activeRoomCode", roomCode); } catch {}
+    try { localStorage.setItem("activeRoomCode", roomCode); } catch { /* storage bloqueado: segue sem lembrar a sala */ }
     const id = setInterval(() => { beat({ data: { code: roomCode, playerId: myId } }).catch(() => {}); }, 15000);
     return () => clearInterval(id);
   }, [roomCode, myId, beat]);
 
   useEffect(() => {
     if (state?.finished) {
-      try { localStorage.removeItem("activeRoomCode"); } catch {}
+      try { localStorage.removeItem("activeRoomCode"); } catch { /* storage bloqueado: segue sem lembrar a sala */ }
     }
   }, [state?.finished]);
 
@@ -118,7 +118,7 @@ export function MesaOnline() {
       setPendingWild(c);
       return;
     }
-    try { await play({ data: { code: roomCode, playerId: myId, cardId: c.id } }); } catch {}
+    try { await play({ data: { code: roomCode, playerId: myId, cardId: c.id } }); } catch (e) { console.warn("[uno] ação recusada pelo servidor", e); }
   }
 
   async function pickColor(color: Exclude<CardColor, "wild">) {
@@ -127,19 +127,19 @@ export function MesaOnline() {
     setPendingWild(null);
     try {
       await play({ data: { code: roomCode, playerId: myId, cardId: card.id, chosenColor: color } });
-    } catch {}
+    } catch (e) { console.warn("[uno] ação recusada pelo servidor", e); }
   }
 
   async function handleDraw() {
     if (!roomCode || !isMyTurn) return;
-    try { await draw({ data: { code: roomCode, playerId: myId } }); } catch {}
+    try { await draw({ data: { code: roomCode, playerId: myId } }); } catch (e) { console.warn("[uno] ação recusada pelo servidor", e); }
   }
 
   async function handleDeactivateBot() {
     if (!roomCode) return;
     try {
       await disableBot({ data: { code: roomCode, playerId: myId, name: getLocalPlayerName() || "Jogador" } });
-    } catch {}
+    } catch (e) { console.warn("[uno] ação recusada pelo servidor", e); }
   }
 
   if (error || !room) {

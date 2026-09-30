@@ -19,7 +19,7 @@ export function WaitingRoom() {
 
   useEffect(() => {
     if (!roomCode) return;
-    try { localStorage.setItem("activeRoomCode", roomCode); } catch {}
+    try { localStorage.setItem("activeRoomCode", roomCode); } catch { /* storage bloqueado: segue sem lembrar a sala */ }
     const send = () => { beat({ data: { code: roomCode, playerId: myId } }).catch(() => {}); };
     send();
     const id = setInterval(send, 5000);
@@ -40,7 +40,7 @@ export function WaitingRoom() {
   }
 
   async function handleLeave() {
-    try { localStorage.removeItem("activeRoomCode"); } catch {}
+    try { localStorage.removeItem("activeRoomCode"); } catch { /* storage bloqueado: segue sem lembrar a sala */ }
     if (roomCode) await leave({ data: { code: roomCode, playerId: myId } });
     go("lobby", { mode: "batalha", roomCode: null });
   }

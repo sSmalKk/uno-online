@@ -40,7 +40,7 @@ function PersistentBack() {
       case "mesa-online":
         return go("lobby", { roomCode: null, mode: "batalha" });
       default:
-        return; // TODO: ação na home
+        return; // já está na home
     }
   };
   return (

@@ -36,8 +36,7 @@ export type Action =
   | { type: "CHOOSE_COLOR"; player: number; color: Exclude<CardColor, "wild"> }
   | { type: "CANCEL_COLOR" }
   | { type: "CPU_TURN" }
-  | { type: "RESET" }
-  | { type: "DEBUG_ADD_CARDS"; player: number; count: number };
+  | { type: "RESET" };
 
 function topValue(state: GameState): CardValue {
   return state.discardPile[state.discardPile.length - 1].value;
@@ -50,7 +49,7 @@ export function getTopValue(state: GameState): CardValue {
 export function createInitialState(players = PLAYERS): GameState {
   const deck = shuffle(buildDeck());
   const { hands, drawPile, starter } = deal(deck, players, 7);
-  let currentColor: Exclude<CardColor, "wild"> =
+  const currentColor: Exclude<CardColor, "wild"> =
     starter.color === "wild" ? "red" : starter.color;
   let direction: 1 | -1 = 1;
   let turn = 0;
@@ -286,20 +285,6 @@ export function reduce(state: GameState, action: Action): GameState {
       const chosenColor =
         card.color === "wild" ? pickColorForBot(state.hands[p]) : undefined;
       return applyPlay(state, p, card, chosenColor);
-    }
-    case "DEBUG_ADD_CARDS": {
-      const p = action.player;
-      const n = action.count;
-      const generated: Card[] = Array.from({ length: n }, (_, i) => {
-        const color = COLORS[Math.floor(Math.random() * COLORS.length)];
-        const v = Math.floor(Math.random() * 10).toString() as CardValue;
-        return { id: `dbg-${Date.now()}-${i}`, color, value: v };
-      });
-      return {
-        ...state,
-        hands: state.hands.map((h, i) => (i === p ? [...h, ...generated] : h)),
-        log: [...state.log, `[DEBUG] +${n} cartas para o jogador ${p + 1}`],
-      };
     }
   }
 }

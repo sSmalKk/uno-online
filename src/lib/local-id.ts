@@ -1,5 +1,5 @@
-const KEY = "domino:player-id";
-const NAME_KEY = "domino:player-name";
+const KEY = "uno:player-id";
+const NAME_KEY = "uno:player-name";
 
 export function getLocalPlayerId(): string {
   if (typeof window === "undefined") return "ssr";

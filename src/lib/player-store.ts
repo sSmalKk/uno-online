@@ -7,7 +7,7 @@ type PlayerState = {
   points: number;
 };
 
-const KEY = "domino-player-v2";
+const KEY = "uno:player-v2";
 const DEFAULT: PlayerState = { name: "SHAMPOO", id: "82095529", coins: 999_999_999, points: 0 };
 
 let state: PlayerState = load();
